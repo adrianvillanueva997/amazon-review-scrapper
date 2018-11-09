@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 def make_request(url):
     """
-    Function that recieves an url and returns the raw html code of a webpage.
+    Recieves an url and returns the raw html code of a webpage.
     :returns html: str
     :argument url: str
     """
@@ -16,12 +16,22 @@ def make_request(url):
 
 
 def get_div_blocks(html):
+    """
+    Recieves the raw html code and returns a list with the div class blocks that we want.
+    :returns div_class_blocks: list
+    :argument url: str
+    """
     soup = BeautifulSoup(html, 'html.parser')
     div_class_blocks = soup.findAll("div", class_='a-section review')
     return div_class_blocks
 
 
 def filter_data(div_blocks):
+    """
+    Recieves a list of div classes and filters the reviews by the rating score, returns a dictionary with 3 lists, one for each kind of review.
+    :returns datos : dict
+    :argument div_blocks: list
+    """
     # malas: 1-2
     # neutras: 3
     # buenas: 4-5
@@ -53,6 +63,10 @@ def filter_data(div_blocks):
 
 
 def export_reviews(path, file_name, index, review):
+    """
+    Exports the review.
+    :argument path,file_name,index,review: str
+    """
     with open(path + str(index) + '_' + file_name + '.txt', 'w', encoding='utf-8') as file:
         file.write(review)
 
