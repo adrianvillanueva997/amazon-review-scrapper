@@ -3,8 +3,9 @@ Simple script that gets reviews from amazon given a reviews url
 
 # How to use
 Just put theu urls in ``urls.txt`` with this format: 
+```
 https://www.amazon.es/Apple-iPhone-Plata-Smartphone-Reacondicionado/product-reviews/B01L9KX26S/ref=cm_cr_getr_d_paging_btm_3?ie=UTF8&reviewerType=all_reviews&pageNumber=
-
+```
 Later just edit the end of the python script with the filenames and paths that you want
 
 ## Installation
