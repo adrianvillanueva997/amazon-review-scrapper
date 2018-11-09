@@ -10,7 +10,7 @@ Later just edit the end of the python script with the filenames and paths that y
 
 ## Installation
 
-OS X & Linux:
+Debian / Ubuntu based distros:
 
 ```sh
 sudo apt install python3.6
