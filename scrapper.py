@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 
 
 def make_request(url):
@@ -12,6 +13,7 @@ def make_request(url):
     request = requests.get(url=url, headers=headers)
     print(f'[INFO] Request made to: {url} with response: {request}')
     html = request.content
+
     return html
 
 
@@ -24,6 +26,17 @@ def get_div_blocks(html):
     soup = BeautifulSoup(html, 'html.parser')
     div_class_blocks = soup.findAll("div", class_='a-section review')
     return div_class_blocks
+
+
+def check_limit(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    limit = soup.find('div', {'class': 'a-section a-spacing-top-large a-text-center no-reviews-section'})
+    limit = str(limit).replace(
+        '<div class="a-section a-spacing-top-large a-text-center no-reviews-section"><span class="a-size-medium">', '')
+    if len(limit) == 4:
+        return True
+    else:
+        return False
 
 
 def filter_data(div_blocks):
@@ -52,6 +65,7 @@ def filter_data(div_blocks):
         review = review.replace('<br/>', '')
         review = review.replace('</span>', '')
         rating = int(rating)
+
         if rating == 1 or rating == 2:
             datos['malas'].append(review)
         elif rating == 3:
@@ -73,7 +87,7 @@ def export_reviews(path, file_name, index, review):
 
 if __name__ == '__main__':
     urls = [
-        'https://www.amazon.es/Apple-iPhone-Plata-Smartphone-Reacondicionado/product-reviews/B01L9KWM6E/ref=cm_cr_arp_d_paging_btm_2?ie=UTF8&reviewerType=all_reviews&pageNumber=',
+        'https://www.amazon.es/Apple-iPhone-Espacial-Smartphone-Reacondicionado/product-reviews/B01L9KXU7O/',
     ]
     data = {
         'malas': [],
@@ -84,9 +98,9 @@ if __name__ == '__main__':
         num_page = 1
         max = 2
         while num_page < max:
-            html = make_request(url + str(num_page))
+            html = make_request(url + 'cm_cr_arp_d_paging_btm_' + str(num_page) + '?pageNumber=' + str(num_page))
             blocks = get_div_blocks(html)
-            if len(blocks) != 0:
+            if check_limit(html) == True:
                 filtered_data = filter_data(blocks)
                 for malas in filtered_data['malas']:
                     data['malas'].append(malas)
@@ -99,9 +113,13 @@ if __name__ == '__main__':
             else:
                 num_page = max
 
-    print('malas:', str(len(data['malas'])))
-    print('neutras: ', str(len(data['neutras'])))
-    print('buenas: ', str(len(data['buenas'])))
+    mala_total = len(data['malas'])
+    neutra_total = len(data['neutras'])
+    buena_total = len(data['buenas'])
+    print('malas:', str(mala_total))
+    print('neutras: ', str(neutra_total))
+    print('buenas: ', str(buena_total))
+    print('total: ', str(mala_total + neutra_total + buena_total))
 
     print('[INFO] Exporting bad reviews')
     filename = 'mala'
