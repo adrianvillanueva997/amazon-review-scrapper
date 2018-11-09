@@ -2,7 +2,7 @@
 Simple script that gets reviews from amazon given a reviews url
 
 # How to use
-Just put the urls in ``urls.txt`` with this format: 
+Just put the urls in ``urls = []`` at line 61 with this format: 
 ```
 https://www.amazon.es/Apple-iPhone-Plata-Smartphone-Reacondicionado/product-reviews/B01L9KX26S/ref=cm_cr_getr_d_paging_btm_3?ie=UTF8&reviewerType=all_reviews&pageNumber=
 ```
