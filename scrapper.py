@@ -124,14 +124,14 @@ if __name__ == '__main__':
     print('[INFO] Exporting bad reviews')
     filename = 'mala'
     index = 1
-    path = r'/home/xiao/Documents/dataset-computacion/malas/'
+    path = r'/malas/'
     for review_mala in data['malas']:
         export_reviews(path, filename, str(index), review_mala)
         index += 1
 
     filename = 'buena'
     index = 1
-    path = r'/home/xiao/Documents/dataset-computacion/buenas/'
+    path = r'/buenas/'
     print('[INFO] Exporting good reviews')
     for review_mala in data['buenas']:
         export_reviews(path, filename, str(index), review_mala)
@@ -139,7 +139,7 @@ if __name__ == '__main__':
 
     filename = 'neutra'
     index = 1
-    path = r'/home/xiao/Documents/dataset-computacion/neutras/'
+    path = r'/neutras/'
     print('[INFO] Exporting neutral reviews')
     for review_mala in data['neutras']:
         export_reviews(path, filename, str(index), review_mala)
